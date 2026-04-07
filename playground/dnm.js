@@ -1,0 +1,38 @@
+const {MeksaApi} = require("../services/api_engine");
+const dotenv = require("dotenv");
+const path = require("path");
+
+dotenv.config({
+  path: path.resolve(__dirname, "../.env")
+});
+
+async function main() {
+  const api = new MeksaApi({
+    customerNo: process.env.CUSTOMER_NO,
+    password: process.env.PASSWORD,
+    token: process.env.TOKEN,
+
+  });
+  try {
+    const viop_postions = await api.getViopPositions();
+    console.log("Viop pozisyonlar:", viop_postions.data.HVP || []);
+
+    const teminat = await api.getViopCollateral();
+    console.log("Viop teminat bilgisi:", teminat.data.VTM || []);
+
+    //const createBuyOrderViop = await api.placeViopBuyOrder({ sozlesme: process.env.VIOP_SOZLESME, quantity: 1, price: 0, orderType: "PKP", duration: "KIE", aksamSeansi: 1 });
+    //console.log("Viop alis emri sonucu:", createBuyOrderViop.data);
+
+    const bakiye = await api.getSpotBalance();
+    console.log("Spot bakiye:", bakiye.data.CBK?.[0]?.fields?.[0]);
+
+    const viop_açık_poz = await api.getViopOrders({ gerceklesenDetay: 10 });
+    console.log("Viop açık emirler:", viop_açık_poz.data.HGE || []);
+  } catch (error) {
+    console.error("Hata:", error.message);
+  }
+}
+
+if (require.main === module) {
+  main();
+}
