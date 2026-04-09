@@ -1,0 +1,31 @@
+getviopFreeBalance() 
+
+* metoduyla meksa api üzerinden viop hesabındaki bakiye bilgilerini temin edildi.
+* bu metod bir obje return eder. 
+-->
+  Viop bakiye : {
+
+  hesapNo: '106637',
+  tarih: '09/04/2026',
+  toplamBakiye: 30052.85,
+  kullanilanTeminat: 0,
+  bosBakiye: 30052.85,
+  islemdekiBakiye: '0',
+  rawFields: [
+    '106637',   '09/04/2026',
+    '',         '',
+    '30052.85', '0.00',
+    '30052.85', '0',
+    '0',        '0',
+    '30052.85', '30052.85',
+    '0',        '30052.85',
+    '��lemde',  '0',
+    '0',        '0',
+    '0',        ''
+  ]
+
+}
+
+
+
+

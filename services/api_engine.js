@@ -117,22 +117,23 @@ class MeksaApi {
     });
   }
 
-    async getViopFreeBalance() {
-      const balance = await this.getViopCollateral();
-      const freeBalanceLine = balance?.lines?.find(line => line.key === "BVTM");
-      if (!freeBalanceLine?.value) return null;
+  async getViopFreeBalance() {
+    const balance = await this.getViopCollateral();
+    const freeBalanceLine = balance?.lines?.find(line => line.key === "BVTM");
+    if (!freeBalanceLine?.value) return null;
 
-      const fields = freeBalanceLine.value.split("|");
+    const fields = freeBalanceLine.value.split("|");
 
-      return {
-        hesapNo: fields[0] || null,
-        tarih: fields[1] || null,
-        toplamBakiye: parseFloat(fields[4] || "0"),
-        kullanilanTeminat: parseFloat(fields[5] || "0"),
-        bosBakiye: parseFloat(fields[6] || "0"), // ya da fields[4], API field sırasına göre netleştir
-        durum: fields[14] || null,
-        rawFields: fields
-      }
+    return {
+      hesapNo: fields[0] || null,
+      tarih: fields[1] || null,
+      toplamBakiye: parseFloat(fields[4] || "0"),
+      kullanilanTeminat: parseFloat(fields[5] || "0"),
+      bosBakiye: parseFloat(fields[6] || "0"), // ya da fields[4], API field sırasına göre netleştir
+      gercekSerbestBakiye: parseFloat(fields[13] || "0"),
+      Kar_Zarar: fields[15] || null,
+      rawFields: fields
+    }
   }
 
   async getViopPositions() {

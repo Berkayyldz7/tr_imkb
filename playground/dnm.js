@@ -20,16 +20,35 @@ async function main() {
     // const teminat = await api.getViopCollateral();
     // console.log("Viop teminat bilgisi:", teminat || []);
 
-    //const createBuyOrderViop = await api.placeViopBuyOrder({ sozlesme: process.env.VIOP_SOZLESME, quantity: 1, price: 0, orderType: "PKP", duration: "KIE", aksamSeansi: 1 });
-    //console.log("Viop alis emri sonucu:", createBuyOrderViop.data);
+    // const createBuyOrderViop = await api.placeViopBuyOrder({ sozlesme: process.env.VIOP_SOZLESME, quantity: 1, price: 0, orderType: "PKP", duration: "KIE", aksamSeansi: 1 });
+    // console.log("Viop alis emri sonucu:", createBuyOrderViop.data);
 
 
     // const viop_açık_poz = await api.getViopOrders({ gerceklesenDetay: 10 });
     // console.log("Viop açık emirler:", viop_açık_poz || []);
 
+
+
+
+    // ------ aSIL İŞE YARAYACAK KISIMLAR -------
+
     const viop_bakiye = await api.getViopFreeBalance();
     console.log("Viop bakiye:", viop_bakiye || []);
 
+    // const viop_açık_poz = await api.getViopOrders({ gerceklesenDetay: 10 });
+    // console.log("Viop açık emirler:", viop_açık_poz || []);
+
+
+    // const createBuyOrderViop = await api.placeViopBuyOrder({ sozlesme: process.env.VIOP_SOZLESME, quantity: 1, price: 0, orderType: "PKP", duration: "KIE", aksamSeansi: 1 });
+    // console.log("Viop alis emri sonucu:", createBuyOrderViop.data);
+
+
+    // const createSellOrderViop = await api.placeViopSellOrder({ sozlesme: process.env.VIOP_SOZLESME, quantity: 1, price: 15088, orderType: "PKP", duration: "KIE", aksamSeansi: 1 });
+    // console.log("Viop satis emri sonucu:", createSellOrderViop.data);
+
+
+    // const viop_açık_poz = await api.getViopPositions();
+    // console.log("Viop pozisyonlar:", viop_açık_poz || []);
 
 
   } catch (error) {
