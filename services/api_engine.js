@@ -117,7 +117,7 @@ class MeksaApi {
     });
   }
 
-  async getViopFreeBalance() {
+  async getViopFreeBalanceDetails() {
     const balance = await this.getViopCollateral();
     const freeBalanceLine = balance?.lines?.find(line => line.key === "BVTM");
     if (!freeBalanceLine?.value) return null;
@@ -127,11 +127,9 @@ class MeksaApi {
     return {
       hesapNo: fields[0] || null,
       tarih: fields[1] || null,
-      toplamBakiye: parseFloat(fields[4] || "0"),
-      kullanilanTeminat: parseFloat(fields[5] || "0"),
-      bosBakiye: parseFloat(fields[6] || "0"), // ya da fields[4], API field sırasına göre netleştir
-      gercekSerbestBakiye: parseFloat(fields[13] || "0"),
-      Kar_Zarar: fields[15] || null,
+      gerekliBaslangicTeminati: parseFloat(fields[7] || "0"),
+      serbesBakiye: parseFloat(fields[10] || "0"),
+      karZarar: fields[15] || null,
       rawFields: fields
     }
   }
@@ -140,6 +138,26 @@ class MeksaApi {
     return this._sendAuthenticated({
       KOMUT: "BISTECH_VIOP_POZISYONLAR",
     });
+  }
+
+  async getViopPositionsDetails() {
+    const positions = await this.getViopPositions();
+    const detailsLines = positions.lines.find(line => line.key === "BVPS");
+    if (!detailsLines?.value) return null;
+
+    const details = detailsLines?.value.split("|");
+
+    return {
+      hesapNo: details[0] || null,
+      tarih: details[1] || null,
+      sozlesmeAdi: details[3] || null,
+      gunIciKarZarar: details[4] || null,
+      maliyet: details[11] || null,
+      tutar: details[12] || null,
+      uzlastirmaFiyati: details[13] || null,
+      totalPnl: details[14] || null,
+      pnlPostion: details[16] || null,
+    }
   }
 
   async getViopOrders({ gerceklesenDetay = 1 } = {}) {
