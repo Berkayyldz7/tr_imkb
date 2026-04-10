@@ -167,6 +167,49 @@ class MeksaApi {
     });
   }
 
+
+
+  async getViopOrdersDetails({ gerceklesenDetay = 1 } = {}) {
+
+    const response = await this.getViopOrders({ gerceklesenDetay });
+    const rows = response?.data?.BVGI ?? [];
+
+    return rows.map((item) => {
+    const f =
+      item.fields && item.fields.length > 0
+        ? item.fields
+        : String(item.value || "").split("|");
+
+    return {
+      hesapNo: this._toText(f[0]),
+      emirNo: this._toText(f[1]),
+      sozlesme: this._toText(f[2]),
+
+      yonKod: this._toText(f[3]),
+      yon: this._parseDirection(f[3]),
+
+      miktar: this._toNumber(f[4]),
+      kalanMiktar: this._toNumber(f[5]),
+      fiyat: this._toNumber(f[6]),
+      tutar: this._toNumber(f[7]),
+
+      durum: this._toText(f[8]),
+      kanal: this._toText(f[9]),
+      tarih: this._toText(f[10]),
+      islemZamani: this._toText(f[12]),
+
+      referansNo: this._toText(f[13]),
+      emirTipi: this._toText(f[18]),
+      araciKodu: this._toText(f[20]),
+
+      sonFiyat: this._toNumber(f[21]),
+      saat: this._toText(f[24]),
+
+      rawFields: f,
+    };
+  });
+}
+
   async placeViopBuyOrder({
     sozlesme,
     quantity = 1,
@@ -391,6 +434,22 @@ class MeksaApi {
     if (![0, 1, "0", "1", false, true].includes(aksamSeansi)) {
       throw new Error("aksamSeansi sadece 0 veya 1 olabilir.");
     }
+  }
+
+  _toNumber(value) {
+  if (value === "" || value == null) return null;
+  const n = Number(String(value).replace(",", "."));
+  return Number.isNaN(n) ? null : n;
+  }
+
+  _toText(value) {
+  return value === "" ? null : value;
+  }
+
+  _parseDirection(code) {
+  if (code === "A") return "AL";
+  if (code === "S") return "SAT";
+  return code;
   }
 }
 

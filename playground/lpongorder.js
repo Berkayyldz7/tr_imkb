@@ -16,8 +16,7 @@ async function main() {
   try {
 
 
-    const viop_order_details = await api.getViopOrdersDetails();
-    console.log("Viop emir detayları:", viop_order_details || []);
+
 
 
   } catch (error) {

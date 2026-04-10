@@ -20,7 +20,7 @@ async function main() {
     // const teminat = await api.getViopCollateral();
     // console.log("Viop teminat bilgisi:", teminat || []);
 
-    // const createBuyOrderViop = await api.placeViopBuyOrder({ sozlesme: process.env.VIOP_SOZLESME, quantity: 1, price: 0, orderType: "PKP", duration: "KIE", aksamSeansi: 1 });
+    // const createBuyOrderViop = await api.placeViopBuyOrder({ sozlesme: process.env.VIOP_SOZLESME, quantity: 2, price: 160100, orderType: "LMT", duration: "KIE", aksamSeansi: 1 });
     // console.log("Viop alis emri sonucu:", createBuyOrderViop.data);
 
 
