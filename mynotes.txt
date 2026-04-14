@@ -27,5 +27,27 @@ getviopFreeBalance()
 }
 
 
+onUpdate metodu bir fonksiyon alıyor ve veri her güncellendiğinde tetikleniyor, 
+
+--> Dolayısıyla içine yazdığımız her kod veri her güncellendiğinde çalıştırılır.
+
+
+
+
+
+
+SPOT 
+
+
+    const balance = await api.getSpotBalance();
+    console.log("Spot bakiye:", balance.data.CBK?.[0]?.fields?.[0]);
+
+    const orders = await api.getSpotOrders();
+    console.log(
+      "Son emirler:",
+      (orders.data.HGI || []).map((item) => item.fields)
+    );
+
+
 
 
