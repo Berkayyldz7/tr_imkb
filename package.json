@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "start": "node app.js",
+    "recorder": "node ./services/run_recorder.js",
+    "take_token": "node ./services/create_token.js"
   },
   "keywords": [],
   "author": "",

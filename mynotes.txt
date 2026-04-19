@@ -35,6 +35,16 @@ onUpdate metodu bir fonksiyon alıyor ve veri her güncellendiğinde tetikleniyo
 
 
 
+* setInterval kullanmadan verilere erişmeye çalışırsak veriler null dönüyor.
+
+  setInterval(() => {
+    console.log("XU100:", liveDataClient.getLatestPrice("XU100"));
+    console.log("F_XU0300426:", liveDataClient.getLatestPrice("F_XU0300426"));
+    }, 1000);
+
+
+
+
 
 SPOT 
 
@@ -51,3 +61,15 @@ SPOT
 
 
 
+
+
+16403
+
+
+Uzlaşı ortalamaları için günler, haftaiçi günler al ( 18:15 uzlaşı fiyatı )
+
+17.04.2026 --> 16896.00
+16.04.2026 --> 16403.00
+15.04.2026 --> 16563.00
+14.04.2026 --> 16550.00
+13.04.2026 --> 16463.00

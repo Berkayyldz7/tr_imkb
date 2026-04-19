@@ -211,7 +211,7 @@ class LiveDataClient {
         name: "real",
         brokerUrl: DEFAULT_REAL_BROKER_URL,
         options: { ...this.options },
-        subscriptions: ["mx/derivative/F_XU0300426"],
+        subscriptions: [`mx/derivative/${process.env.VIOP_SOZLESME}`],
       },
     ];
   }
