@@ -2,8 +2,9 @@ const fs = require("fs/promises");
 const path = require("path");
 
 class FxuSettlementRecorder {
-  constructor(marketDataService, options = {}) {
+  constructor(marketDataService, settlementAverage, options = {}) {
     this.marketDataService = marketDataService;
+    this.settlementAverage = settlementAverage;
     this.intervalMs = options.intervalMs || 10000;
     this.outputFile =
       options.outputFile ||
@@ -64,7 +65,7 @@ class FxuSettlementRecorder {
   async tick() {
     console.log("Recorder tick calisti");
     if (this.isWriting) return;
-    //if (!this.isAfter1815()) return;
+    if (!this.isAfter1815()) return;
 
     const fxu = this.marketDataService.getFxuSnapshot();
     if (!fxu) return;
@@ -88,6 +89,8 @@ class FxuSettlementRecorder {
       });
 
       await this.writeJson(rows);
+
+      this.settlementAverage.update(rows);
 
       console.log("FXU settlement kaydedildi:", {
         date: today,

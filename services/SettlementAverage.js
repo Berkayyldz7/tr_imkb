@@ -5,12 +5,12 @@ class SettlementAverage {
   }
 
   init(rows = []) {
-    this.rows = rows;
+    this.rows = Array.isArray(rows) ? [...rows] : [];
     this.recalculate();
   }
 
   update(rows = []) {
-    this.rows = rows;
+    this.rows = Array.isArray(rows) ? [...rows] : [];
     this.recalculate();
   }
 
@@ -25,7 +25,9 @@ class SettlementAverage {
         date: row.date,
         settlement: Number(row.settlement),
       }))
-      .filter((row) => Number.isFinite(row.settlement))
+      .filter((row) => {
+        return Number.isFinite(row.settlement) && !this.isWeekend(row.date);
+      })
       .sort((a, b) => new Date(a.date) - new Date(b.date))
       .slice(-5);
 
@@ -36,6 +38,13 @@ class SettlementAverage {
 
     const total = validRows.reduce((sum, row) => sum + row.settlement, 0);
     this.avg5 = total / validRows.length;
+  }
+
+  isWeekend(dateString) {
+    const date = new Date(`${dateString}T12:00:00`);
+    const day = date.getDay();
+
+    return day === 0 || day === 6;
   }
 }
 

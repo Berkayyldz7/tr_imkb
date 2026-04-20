@@ -84,16 +84,23 @@ class MarketDataService {
     this.fxuClient.on("message", (topic, payload) => {
       try {
         const decoded = this.derivativeMessage.decode(payload);
-
-        this.state.fxu = this.derivativeMessage.toObject(decoded, {
+        const partial = this.derivativeMessage.toObject(decoded, {
           longs: Number,
           enums: String,
-          defaults: true,
+          defaults: false,
         });
+
+        this.state.fxu = {
+          ...(this.state.fxu || {}),
+          ...partial,
+        };
 
         this.state.fxuTime = Date.now();
       } catch (error) {
         console.error("FXU decode hatasi:", error.message);
+        console.error("FXU topic:", topic);
+        console.error("FXU payload length:", payload.length);
+        console.error("FXU payload hex:", payload.toString("hex"));
       }
     });
 
@@ -161,6 +168,7 @@ class MarketDataService {
 
   getViopSettlementPrice() {
     if (!this.state.fxu) return null;
+    if (this.state.fxu.settlement === undefined) return null;
     return this.state.fxu.settlement
   }
 

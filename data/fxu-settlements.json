@@ -4,6 +4,10 @@
     "settlement": 16403
   },
   {
+    "date": "2026-04-17",
+    "settlement": 16896
+  },
+  {
     "date": "2026-04-15",
     "settlement": 16563
   },
@@ -16,10 +20,24 @@
     "settlement": 16463
   },
   {
-    "date": "2026-04-20",
+    "date": "2026-04-18",
     "symbolCode": "F_XU0300426",
-    "settlement": 16896,
+    "settlement": 168960,
     "updateDate": "2026-04-17T23:00:00.000+03",
     "recordedAt": "2026-04-19T22:40:01.463Z"
+  },
+  {
+    "date": "2026-04-19",
+    "symbolCode": "F_XU0300426",
+    "settlement": 1689622,
+    "updateDate": "2026-04-17T23:00:00.000+03",
+    "recordedAt": "2026-04-19T23:52:21.104Z"
+  },
+  {
+    "date": "2026-04-20",
+    "symbolCode": "F_XU0300426",
+    "settlement": 16755,
+    "updateDate": "2026-04-20T18:09:59.000+03",
+    "recordedAt": "2026-04-20T15:15:00.423Z"
   }
 ]

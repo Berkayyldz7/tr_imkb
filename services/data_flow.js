@@ -3,6 +3,8 @@ const pb = require("protobufjs");
 const dotenv = require("dotenv");
 const path = require("path");
 
+console.log("[LIVEMARKETSTREAM FILE LOADED]", __filename);
+
 dotenv.config({
   path: path.resolve(__dirname, "../.env"),
 });
@@ -12,6 +14,9 @@ class LiveMarketStream {
     xu100Code = "XU100",
     viopCode = process.env.VIOP_SOZLESME,
   } = {}) {
+    console.log("[DATA_FLOW CONSTRUCTOR]");
+    console.log("[LIVEMARKETSTREAM CONSTRUCTOR CALLED]");
+
     if (!viopCode) {
       throw new Error("VIOP_SOZLESME .env icinde tanimli olmali.");
     }
@@ -48,6 +53,9 @@ class LiveMarketStream {
   }
 
   async start() {
+    console.log("[DATA_FLOW START]");
+    console.log("[LIVEMARKETSTREAM START CALLED]");
+
     if (this.started) {
       return;
     }
@@ -94,6 +102,8 @@ class LiveMarketStream {
   }
 
   _connectSpot() {
+    console.log("[LIVEMARKETSTREAM _connectSpot ENTERED]");
+
     return new Promise((resolve, reject) => {
       const client = mqtt.connect(
         "wss://dltest.radix.matriksdata.com:443/market",
@@ -174,6 +184,8 @@ class LiveMarketStream {
   }
 
   _connectViop() {
+    console.log("[LIVEMARKETSTREAM _connectViop ENTERED]");
+
     return new Promise((resolve, reject) => {
       const client = mqtt.connect(
         "wss://rttest.radix.matriksdata.com:443/market",
@@ -209,12 +221,34 @@ class LiveMarketStream {
       });
 
       client.on("message", (topic, payload) => {
+        console.log("[VIOP MESSAGE FIRED]", topic, payload?.length);
+
         if (!topic.includes("mx/derivative")) {
           return;
         }
 
         try {
+          console.log("[VIOP TOPIC]", topic);
+          console.log("[VIOP PAYLOAD LEN]", payload.length);
+
+          console.log("[BEFORE VIOP DECODE]", topic, payload?.length);
           const decoded = this.derivativeMessage.decode(payload);
+          console.log("[AFTER VIOP DECODE]", decoded);
+          console.log("[VIOP DECODED]", decoded);
+
+          const objectified = this.derivativeMessage.toObject(decoded, {
+            longs: Number,
+            enums: String,
+            defaults: false,
+            arrays: true,
+            objects: true,
+          });
+
+          console.log("[VIOP RAW DECODED]", decoded);
+          console.log("[VIOP OBJECTIFIED]", objectified);
+          console.log("[VIOP LAST]", decoded.last);
+          console.log("[VIOP DAYCLOSE]", decoded.dayClose);
+
           if (decoded.symbolCode !== this.viopCode) {
             return;
           }
